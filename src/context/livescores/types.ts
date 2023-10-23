@@ -6,7 +6,7 @@ export type match = {
   id: number;
   name: string;
   location: string;
-  sportname: string;
+  sportName: string;
   endsAt: string;
   isrunning: boolean;
   teams: team;

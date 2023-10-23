@@ -1,5 +1,6 @@
 import React, { Suspense } from "react";
 import MatchList from "./Livematch";
+import ArticleList from "./news";
 
 const Matches = () => {
   return (

@@ -14,8 +14,8 @@ const Appbar = () => {
   const { pathname } = useLocation();
 
   const navigation = [
-    { name: "Setting", href: "#", current: false },
-    { name: "Livescores", href: "#", current: false },
+    { name: "signup", href: "/signup", current: false },
+    { name: "signin", href: "/signin", current: false },
   ];
 
   return (

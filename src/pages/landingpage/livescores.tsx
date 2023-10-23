@@ -28,12 +28,17 @@ export default function MatchDataListItems() {
           key={match.id}
           className="flex-shrink-0 w-64 p-4 bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg dark:bg-gray-800"
         >
-          <h5 className="mb-2 text-xl font-medium tracking-tight text-gray-900 dark:text-white">
+          <p className="text-gray-600 text-sm dark:text-gray-400">
+            sport:{match.sportName}
+          </p>
+          <h5 className="mb-2 text-sm font-medium tracking-tight text-gray-900 dark:text-white">
             {match.name}
           </h5>
-          <p className="text-gray-600 dark:text-gray-400">{match.location}</p>
-          <p className="text-gray-600 dark:text-gray-400">{match.sportname}</p>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-gray-600 text-sm dark:text-gray-400">
+            venue:{match.location}
+          </p>
+          <p className="text-gray-600 text-sm dark:text-gray-400"></p>
+          <p className="text-gray-600 text-sm dark:text-gray-400">
             Ends at: {new Date(match.endsAt).toLocaleString()}
           </p>
           {/* Add more properties you want to display */}

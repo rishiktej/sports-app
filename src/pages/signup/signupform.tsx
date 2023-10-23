@@ -3,7 +3,6 @@ import { API_ENDPOINT } from "../../config/constants";
 import { useNavigate } from "react-router-dom";
 
 const Signup: React.FC = () => {
-  const [organisationName, setOrganisationName] = useState("");
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
@@ -14,17 +13,16 @@ const Signup: React.FC = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch(`${API_ENDPOINT}/organisations`, {
+      const response = await fetch(`${API_ENDPOINT}/users`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: organisationName,
-          user_name: userName,
+          name: userName,
           email: userEmail,
           password: userPassword,
         }),
       });
-
+      console.log(response);
       if (!response.ok) {
         throw new Error("Sign-up failed");
       }
@@ -43,19 +41,6 @@ const Signup: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label className="block text-gray-700 font-semibold mb-2">
-          Organisation Name:
-        </label>
-        <input
-          type="text"
-          name="organisationName"
-          id="organisationName"
-          value={organisationName}
-          onChange={(e) => setOrganisationName(e.target.value)}
-          className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 focus:shadow-outline-blue"
-        />
-      </div>
       <div>
         <label className="block text-gray-700 font-semibold mb-2">
           Your Name:

@@ -4,12 +4,20 @@ import React from "react";
 import { MatchProvider } from "./context/livescores/context";
 import router from "./routes";
 import { RouterProvider } from "react-router-dom";
+import {
+  ArticleProvider,
+  ArticlecontentProvider,
+} from "./context/trendingnews/context";
 
 function App() {
   return (
     <>
       <MatchProvider>
-        <RouterProvider router={router} />
+        <ArticleProvider>
+          <ArticlecontentProvider>
+            <RouterProvider router={router} />
+          </ArticlecontentProvider>
+        </ArticleProvider>
       </MatchProvider>
     </>
   );
