@@ -9,25 +9,12 @@ import {
   Text,
   Button,
 } from "@chakra-ui/react";
-import { Dialog, Transition } from "@headlessui/react";
-import {
-  useArticlecontentDispatch,
-  useArticlecontentState,
-} from "../../context/articles/context";
-import { fetchArticle } from "../../context/articles/action";
-import { article } from "../../context/articles/types";
 import { Link } from "react-router-dom";
 
 export default function ArticleDataListItems() {
   const state = useArticleState();
   const { articles, isLoading, isError, errorMessage } = state;
   const [selectedSport, setSelectedSport] = useState("all");
-  const [selectedArticle, setSelectedArticle] = useState<null | article[]>(
-    null
-  );
-  const contentstate = useArticlecontentState();
-  const articledispatch = useArticlecontentDispatch();
-  const { articlecontent } = contentstate;
   const handleTabChange = (sport) => {
     setSelectedSport(sport);
   };
@@ -133,7 +120,9 @@ export default function ArticleDataListItems() {
                   <Text fontSize="sm">Summary: {article.summary}</Text>
                 </CardBody>
                 <Link to={`${article.id}`}>
-                  <Button>Read More</Button>
+                  <Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                    Read More
+                  </Button>
                 </Link>
               </Card>
             </div>

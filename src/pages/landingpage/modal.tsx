@@ -2,32 +2,45 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Button } from "@chakra-ui/react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useParams } from "react-router-dom";
-import {
-  useArticlecontentDispatch,
-  useArticlecontentState,
-} from "../../context/articles/context";
-import { fetchArticle } from "../../context/articles/action";
 import { article } from "../../context/articles/types";
+import { API_ENDPOINT } from "../../config/constants";
 
 export default function ArticleDialog() {
-  const articledispatch = useArticlecontentDispatch();
-  const contentstate = useArticlecontentState();
-  const { articlecontent } = contentstate;
-  const [selectedArticle, setSelectedArticle] = useState<null | article[]>(
-    null
-  );
+  const [selectedArticle, setSelectedArticle] = useState<null | article>(null);
   const { articleId } = useParams();
 
   useEffect(() => {
+    // Fetch the article data when the component mounts
     if (articleId) {
-      fetchArticle(articledispatch, parseInt(articleId));
+      fetchArticleData(parseInt(articleId));
     }
-    setSelectedArticle(articlecontent);
-  }, [articleId, articledispatch]);
+  }, [articleId]);
 
+  const fetchArticleData = async (articleId: number) => {
+    const token = localStorage.getItem("authToken") || "";
+    try {
+      const response = await fetch(`${API_ENDPOINT}/articles/${articleId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch Article");
+      }
+
+      const data = await response.json();
+      setSelectedArticle(data);
+    } catch (error) {
+      console.error("Operation failed:", error);
+    }
+  };
   const closeArticleDialog = () => {
     setSelectedArticle(null);
   };
+
   return (
     <Transition.Root show={selectedArticle !== null} as={Fragment}>
       <Dialog
@@ -74,6 +87,14 @@ export default function ArticleDialog() {
                 </Dialog.Title>
                 <div className="mt-2">
                   <p>{selectedArticle?.content}</p>
+                </div>
+                <div className="mt-2">
+                  <p>Teams:</p>
+                  <ul>
+                    {selectedArticle?.teams.map((team) => (
+                      <li key={team.id}>{team.name}</li>
+                    ))}
+                  </ul>
                 </div>
               </div>
               <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
