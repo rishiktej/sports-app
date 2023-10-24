@@ -19,7 +19,6 @@ export type article = {
   teams: Team[];
 };
 export type articleData = Omit<article,"content">;
-export type articleContent=article
 export type ArticleListState = {
   articles: articleData[];
   isLoading: boolean;

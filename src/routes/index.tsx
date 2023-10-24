@@ -7,9 +7,9 @@ import Signup from "../pages/signup";
 import Logout from "../pages/logout";
 // import NotFound from "../pages/Notfound";
 import Home from "../pages/landingpage";
-import Acontent from "../pages/articlecontent";
 import React from "react";
 import MatchList from "../pages/landingpage/Livematch";
+import ArticleList from "../pages/landingpage/news";
 
 const router = createBrowserRouter([
   {
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
       },
       {
         path: "Home/:articleId",
-        element: <Acontent />,
+        element: <ArticleList />,
       },
     ],
   },
