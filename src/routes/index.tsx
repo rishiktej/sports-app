@@ -10,6 +10,7 @@ import Home from "../pages/landingpage";
 import React from "react";
 import MatchList from "../pages/landingpage/Livematch";
 import ArticleList from "../pages/landingpage/news";
+import ArticleDialog from "../pages/landingpage/modal";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "Home",
         element: <MatchList />,
+      },
+      {
+        path: "Home/:articleId",
+        element: <ArticleDialog />,
       },
     ],
   },
