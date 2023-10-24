@@ -1,6 +1,16 @@
 import React, { useState } from "react";
 import { useArticleState } from "../../context/trendingnews/context";
 import { Link } from "react-router-dom";
+import {
+  Card,
+  CardBody,
+  Heading,
+  Image,
+  Stack,
+  Text,
+  SimpleGrid,
+} from "@chakra-ui/react";
+
 export default function ArticleDataListItems() {
   const state = useArticleState();
   const { articles, isLoading, isError, errorMessage } = state;
@@ -77,29 +87,36 @@ export default function ArticleDataListItems() {
         </li>
       </ul>
       <div className="space-y-4">
-        {articlesForSelectedSport.map((article) => (
-          <Link
-            key={article.id}
-            to={`${article.id}`}
-            className="bg-white p-2 rounded shadow-sm cursor-pointer"
-          >
-            <img
-              src={article.thumbnail}
-              alt={article.title}
-              className="w-full h-16 object-cover rounded-t"
-            />
-            <div className="p-2">
-              <h2 className="text-sm font-semibold">{article.title}</h2>
-              <p className="text-gray-500 text-xs">
-                {new Date(article.date).toDateString()}
-              </p>
-              <p className="mt-1 text-xs">{article.summary}</p>
-              <p className="text-blue-500 hover:underline cursor-pointer text-xs">
-                Read More
-              </p>
-            </div>
-          </Link>
-        ))}
+        <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={4}>
+          {articlesForSelectedSport.map((article) => (
+            <Link
+              key={article.id}
+              to={`${article.id}`}
+              className="bg-white p-1 rounded shadow-sm cursor-pointer"
+            >
+              <Card
+                w="750px"
+                className="bg-white border-black border-4 border-grey-500"
+              >
+                <Image
+                  objectFit="cover"
+                  maxH="200px"
+                  src={article.thumbnail}
+                  alt="Article Thumbnail"
+                />
+                <span>
+                  <CardBody>
+                    <Heading size="md">{article.title}</Heading>
+                    <Text fontSize="sm" color="gray.500">
+                      Date: {new Date(article.date).toDateString()}
+                    </Text>
+                    <Text fontSize="sm">Summary:{article.summary}</Text>
+                  </CardBody>
+                </span>
+              </Card>
+            </Link>
+          ))}
+        </SimpleGrid>
       </div>
     </div>
   );

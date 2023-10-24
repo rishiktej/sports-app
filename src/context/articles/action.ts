@@ -8,7 +8,7 @@ export const fetchArticle = async (
   dispatch: ArticlecontentDispatch,
   articleId:number
 ) => {
-  console.log("hello")
+  console.log("hii")
   const token = localStorage.getItem("authToken") ?? "";
   try {
     dispatch({ type: ArticleListAvailableAction.FETCH_ARTICLE_CONTENT_REQUEST });

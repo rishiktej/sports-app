@@ -4,10 +4,8 @@ import React from "react";
 import { MatchProvider } from "./context/livescores/context";
 import router from "./routes";
 import { RouterProvider } from "react-router-dom";
-import {
-  ArticleProvider,
-  ArticlecontentProvider,
-} from "./context/trendingnews/context";
+import { ArticleProvider } from "./context/trendingnews/context";
+import { ArticlecontentProvider } from "./context/articles/context";
 
 function App() {
   return (

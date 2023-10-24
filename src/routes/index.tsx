@@ -7,7 +7,7 @@ import Signup from "../pages/signup";
 import Logout from "../pages/logout";
 // import NotFound from "../pages/Notfound";
 import Home from "../pages/landingpage";
-import Articlecontent from "../pages/articlecontent/content";
+import Acontent from "../pages/articlecontent";
 import React from "react";
 import MatchList from "../pages/landingpage/Livematch";
 
@@ -45,13 +45,10 @@ const router = createBrowserRouter([
       {
         path: "Home",
         element: <MatchList />,
-        children: [
-          { index: true, element: <Home /> },
-          {
-            path: ":articleId",
-            element: <Articlecontent />,
-          },
-        ],
+      },
+      {
+        path: "Home/:articleId",
+        element: <Acontent />,
       },
     ],
   },

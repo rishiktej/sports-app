@@ -26,20 +26,11 @@ export type ArticleListState = {
   isError: boolean;
   errorMessage: string;
 };
-export type Articlecontentstate={
-  articlecontent:articleContent[];
-  isLoading: boolean;
-  isError: boolean;
-  errorMessage: string;
-}
 export enum ArticleListAvailableAction {
   // ... (existing actions)
   FETCH_ARTICLE_REQUEST = "FETCH_ARTICLE_REQUEST",
   FETCH_ARTICLE_SUCCESS = "FETCH_ARTICLE_SUCCESS",
   FETCH_ARTICLE_FAILURE = "FETCH_ARTICLE_FAILURE",
-  FETCH_ARTICLE_CONTENT_REQUEST="FETCH_ARTICLE_CONTENT_REQUEST",
-  FETCH_ARTICLE_CONTENT_SUCCESS="FETCH_ARTICLE_CONTENT_SUCCESS",
-  FETCH_ARTICLE_CONTENT_FAILURE="FETCH_ARTICLE_CONTENT_FAILURE",
 }
 
 // Add a new action type for MATCH
@@ -53,15 +44,5 @@ export type ArticleActions =
       type: ArticleListAvailableAction.FETCH_ARTICLE_FAILURE;
       payload: string;
     }
-  | { type: ArticleListAvailableAction.FETCH_ARTICLE_CONTENT_REQUEST }
-  | {
-      type: ArticleListAvailableAction.FETCH_ARTICLE_CONTENT_SUCCESS;
-      payload: articleContent[];
-    }
-  | {
-      type: ArticleListAvailableAction.FETCH_ARTICLE_CONTENT_FAILURE;
-      payload: string;
-    };
-
 export type ArticleDispatch = React.Dispatch<ArticleActions>;
 
