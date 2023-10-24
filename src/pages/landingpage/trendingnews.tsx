@@ -40,6 +40,7 @@ export default function ArticleDataListItems() {
   }
   const openArticlecontent = (article) => {
     fetchArticle(articledispatch, parseInt(article));
+    setSelectedArticle(articlecontent);
   };
   console.log(articlecontent);
 
