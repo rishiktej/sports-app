@@ -21,7 +21,11 @@ export default function ArticleDataListItems() {
   const state = useArticleState();
   const { articles, isLoading, isError, errorMessage } = state;
   const [selectedSport, setSelectedSport] = useState("all");
-  const [selectedArticle, setSelectedArticle] = useState<null | article[]>();
+  const [selectedArticle, setSelectedArticle] = useState<null | article[]>(
+    null
+  );
+  const [showOnlyNews, setShowOnlyNews] = useState(false); // Separate state for filtering news
+
   const contentstate = useArticlecontentState();
   const articledispatch = useArticlecontentDispatch();
   const { articlecontent } = contentstate;
@@ -29,9 +33,6 @@ export default function ArticleDataListItems() {
     setSelectedSport(sport);
   };
 
-  const articlesForSelectedSport = articles.filter(
-    (article) => article.sport.name === selectedSport
-  );
   if (isLoading) {
     return <span className="text-center">Loading...</span>;
   }
@@ -39,6 +40,7 @@ export default function ArticleDataListItems() {
   if (isError) {
     return <span className="text-center">{errorMessage}</span>;
   }
+
   const openArticlecontent = (article) => {
     fetchArticle(articledispatch, parseInt(article));
     setSelectedArticle(articlecontent);
@@ -105,7 +107,7 @@ export default function ArticleDataListItems() {
       </ul>
       <div className="space-y-4">
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={4}>
-          {articlesForSelectedSport.map((article) => (
+          {articles.map((article) => (
             <div key={article.id} className="bg-white p-1 rounded shadow-sm">
               <Card
                 w="750px"
