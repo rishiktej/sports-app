@@ -11,28 +11,19 @@ import {
 } from "@chakra-ui/react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
-  useArticlecontentState,
   useArticlecontentDispatch,
+  useArticlecontentState,
 } from "../../context/articles/context";
-import { useParams } from "react-router-dom";
 import { fetchArticle } from "../../context/articles/action";
 
 export default function ArticleDataListItems() {
   const state = useArticleState();
-  const contentstate = useArticlecontentState();
-  const articledispatch = useArticlecontentDispatch();
   const { articles, isLoading, isError, errorMessage } = state;
-  const { articlecontent } = contentstate;
-  const { articleId } = useParams();
   const [selectedSport, setSelectedSport] = useState("all");
   const [selectedArticle, setSelectedArticle] = useState(null);
-  useEffect(() => {
-    if (articleId) {
-      fetchArticle(articledispatch, parseInt(articleId));
-    }
-  }, [articleId, articledispatch]);
-  console.log(articleId);
-  console.log(articlecontent);
+  const contentstate = useArticlecontentState();
+  const articledispatch = useArticlecontentDispatch();
+  const { articlecontent } = contentstate;
   const handleTabChange = (sport) => {
     setSelectedSport(sport);
   };
@@ -40,10 +31,6 @@ export default function ArticleDataListItems() {
   const articlesForSelectedSport = articles.filter(
     (article) => article.sport.name === selectedSport
   );
-  const selectedarticle = articlecontent.find(
-    (article) => article.id === parseInt(articleId)
-  );
-
   if (isLoading) {
     return <span className="text-center">Loading...</span>;
   }
@@ -51,10 +38,10 @@ export default function ArticleDataListItems() {
   if (isError) {
     return <span className="text-center">{errorMessage}</span>;
   }
-
-  const openArticleDialog = (article) => {
-    setSelectedArticle(article);
+  const openArticlecontent = (article) => {
+    fetchArticle(articledispatch, parseInt(article));
   };
+  console.log(articlecontent);
 
   const closeArticleDialog = () => {
     setSelectedArticle(null);
@@ -134,10 +121,10 @@ export default function ArticleDataListItems() {
                     Date: {new Date(article.date).toDateString()}
                   </Text>
                   <Text fontSize="sm">Summary: {article.summary}</Text>
-                  <Button onClick={() => openArticleDialog(article)}>
-                    Read More
-                  </Button>
                 </CardBody>
+                <Button onClick={() => openArticlecontent(article.id)}>
+                  Read More
+                </Button>
               </Card>
             </div>
           ))}

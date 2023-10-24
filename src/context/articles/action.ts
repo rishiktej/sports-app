@@ -28,7 +28,7 @@ export const fetchArticle = async (
     }
 
     const data = await response.json();
-    console.log("da",data)
+    console.log("da",data.content)
     dispatch({
       type: ArticleListAvailableAction.FETCH_ARTICLE_CONTENT_SUCCESS,
       payload: data,
