@@ -15,12 +15,15 @@ import {
   useArticlecontentState,
 } from "../../context/articles/context";
 import { fetchArticle } from "../../context/articles/action";
+import { Link } from "react-router-dom";
 
 export default function ArticleDataListItems() {
   const state = useArticleState();
   const { articles, isLoading, isError, errorMessage } = state;
   const [selectedSport, setSelectedSport] = useState("all");
-  const [selectedArticle, setSelectedArticle] = useState(null);
+  const [selectedArticle, setSelectedArticle] = useState<null | article[]>(
+    null
+  );
   const contentstate = useArticlecontentState();
   const articledispatch = useArticlecontentDispatch();
   const { articlecontent } = contentstate;
