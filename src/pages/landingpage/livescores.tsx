@@ -30,7 +30,6 @@ export default function MatchDataListItems() {
     }
   };
   useEffect(() => {
-    // Fetch match data for each of the latest matches
     const latestMatchIds = matches
       .sort(
         (a, b) => new Date(b.endsAt).getTime() - new Date(a.endsAt).getTime()
@@ -38,11 +37,14 @@ export default function MatchDataListItems() {
       .slice(0, 5)
       .map((match) => match.id);
 
-    // Fetch data for each of the latest matches
     latestMatchIds.forEach((matchId) => {
-      fetchMatchData(matchId);
+      if (
+        !selectedMatches.some((existingMatch) => existingMatch.id === matchId)
+      ) {
+        fetchMatchData(matchId);
+      }
     });
-  }, []);
+  }, [matches]);
 
   console.log(selectedMatches);
   return (
@@ -63,16 +65,23 @@ export default function MatchDataListItems() {
               SCORE:
             </h5>
             <ol className="list-decimal pl-4">
-              {Object.entries(match.score).map(([team, score]) => (
-                <li
-                  key={team}
-                  className="text-sm text-gray-600 dark:text-gray-400"
-                >
-                  {team}: {score}
-                </li>
-              ))}
+              {match?.score &&
+                Object.entries(match?.score).map(([team, score]) => (
+                  <li
+                    key={team}
+                    className="text-sm text-gray-600 dark:text-gray-400"
+                  >
+                    {team}: {score}
+                  </li>
+                ))}
             </ol>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Venue: {match.location}
+            </p>
           </div>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Ends at: {new Date(match.endsAt).toLocaleString()}
+          </p>
         </div>
       ))}
     </div>
