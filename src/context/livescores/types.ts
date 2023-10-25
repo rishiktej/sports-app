@@ -7,6 +7,7 @@ export type match = {
   name: string;
   location: string;
   sportName: string;
+  score:[];
   endsAt: string;
   isrunning: boolean;
   teams: team;

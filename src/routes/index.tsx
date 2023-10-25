@@ -47,10 +47,12 @@ const router = createBrowserRouter([
       {
         path: "Home",
         element: <MatchList />,
-      },
-      {
-        path: "Home/:articleId",
-        element: <ArticleDialog />,
+        children: [
+          {
+            path: ":articleId",
+            element: <ArticleDialog />,
+          },
+        ],
       },
     ],
   },

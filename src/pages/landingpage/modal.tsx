@@ -4,6 +4,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { useParams } from "react-router-dom";
 import { API_ENDPOINT } from "../../config/constants";
 import { article } from "../../context/trendingnews/types";
+import { Link } from "react-router-dom";
 
 export default function ArticleDialog() {
   const [selectedArticle, setSelectedArticle] = useState<null | article>(null);
@@ -97,9 +98,11 @@ export default function ArticleDialog() {
                   </ul>
                 </div>
               </div>
-              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <Button onClick={closeArticleDialog}>Close</Button>
-              </div>
+              <Link to={`${"../"}`}>
+                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                  <Button onClick={closeArticleDialog}>Close</Button>
+                </div>
+              </Link>
             </div>
           </Transition.Child>
         </div>
