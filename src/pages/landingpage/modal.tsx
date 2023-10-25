@@ -2,8 +2,8 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Button } from "@chakra-ui/react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useParams } from "react-router-dom";
-import { article } from "../../context/articles/types";
 import { API_ENDPOINT } from "../../config/constants";
+import { article } from "../../context/trendingnews/types";
 
 export default function ArticleDialog() {
   const [selectedArticle, setSelectedArticle] = useState<null | article>(null);
