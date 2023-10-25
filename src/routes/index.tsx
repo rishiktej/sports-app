@@ -11,6 +11,7 @@ import React from "react";
 import MatchList from "../pages/landingpage/Livematch";
 import ArticleList from "../pages/landingpage/news";
 import ArticleDialog from "../pages/landingpage/modal";
+import NotFound from "../pages/Notfound";
 
 const router = createBrowserRouter([
   {
@@ -29,14 +30,14 @@ const router = createBrowserRouter([
     path: "/logout",
     element: <Logout />,
   },
-  // {
-  //   path: "/notfound",
-  //   element: <NotFound />,
-  // },
-  // {
-  //   path: "*",
-  //   element: <Navigate to="/notfound" replace />,
-  // },
+  {
+    path: "/notfound",
+    element: <NotFound />,
+  },
+  {
+    path: "*",
+    element: <Navigate to="/notfound" replace />,
+  },
   // Protected Routes
   {
     path: "account",
