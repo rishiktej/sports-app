@@ -24,16 +24,11 @@ export default function MatchDataListItems() {
       }
 
       const data = await response.json();
-      setSelectedMatches((prevMatches) =>
-        prevMatches.map((prevMatch) =>
-          prevMatch.id === data.id ? data : prevMatch
-        )
-      );
+      setSelectedMatches((prevMatches) => [...prevMatches, data]);
     } catch (error) {
       console.error("Operation failed:", error);
     }
   };
-
   useEffect(() => {
     // Fetch match data for each of the latest matches
     const latestMatchIds = matches
@@ -49,11 +44,7 @@ export default function MatchDataListItems() {
     });
   }, []);
 
-  const handleRefreshClick = (matchId: number) => {
-    // Manually refresh the scores for a specific match
-    fetchMatchData(matchId);
-  };
-
+  console.log(selectedMatches);
   return (
     <div className="flex space-x-4 overflow-x-auto">
       {selectedMatches.map((match) => (
@@ -67,37 +58,21 @@ export default function MatchDataListItems() {
           <h5 className="mb-2 text-sm font-medium tracking-tight text-gray-900 dark:text-white">
             {match.name}
           </h5>
-          <div className="mb-4">
-            <h5 className="text-sm font-medium text-gray-900 dark:text-white">
+          <div>
+            <h5 className="mb-2 text-sm font-medium tracking-tight text-gray-900 dark:text-white">
               SCORE:
             </h5>
-            <ul className="list-decimal pl-4">
-              <ol className="list-decimal pl-4">
-                {Object.entries(match.score).map(([team, score]) => (
-                  <li
-                    key={team}
-                    className="text-sm text-gray-600 dark:text-gray-400"
-                  >
-                    {team}: {score}
-                  </li>
-                ))}
-              </ol>
-            </ul>
+            <ol className="list-decimal pl-4">
+              {Object.entries(match.score).map(([team, score]) => (
+                <li
+                  key={team}
+                  className="text-sm text-gray-600 dark:text-gray-400"
+                >
+                  {team}: {score}
+                </li>
+              ))}
+            </ol>
           </div>
-          <div className="flex items-center">
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              Venue: {match.location}
-            </p>
-          </div>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            Ends at: {new Date(match.endsAt).toLocaleString()}
-          </p>
-          <button
-            onClick={() => handleRefreshClick(match.id)}
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
-          >
-            Refresh Score
-          </button>
         </div>
       ))}
     </div>
