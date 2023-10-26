@@ -17,13 +17,13 @@ const MatchList: React.FC = () => {
         <MatchListItems />
       </div>
       <div className="flex flex-col md:flex-row">
-        <div className="md:w-2/3 p-4">
+        <div className="md:w-auto p-4">
           <h2 className="text-2xl font-medium tracking-tight text-slate-700 mb-4">
             Latest Articles
           </h2>
           <ArticleList />
         </div>
-        <div className="md:w-1/3 p-7">
+        <div className="md:w-auto p-4">
           <h2 className="text-2xl font-medium tracking-tight text-slate-700 mb-4">
             Filter by Sport and Team
           </h2>
