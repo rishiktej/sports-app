@@ -181,7 +181,7 @@ export default function FilterLayout() {
                   {" "}
                   Summary: {article.summary}.
                 </Text>
-                <Link to={`/${article.id}`}>
+                <Link to={`${article.id}`}>
                   <Button
                     size="sm"
                     className="bg-cyan-500 hover:bg-cyan-600 rounded border px-2"
