@@ -5,14 +5,23 @@ import { MatchProvider } from "./context/livescores/context";
 import router from "./routes";
 import { RouterProvider } from "react-router-dom";
 import { ArticleProvider } from "./context/trendingnews/context";
+import { SportsProvider } from "./context/sportsandteams/sportscontext";
+import { TeamsProvider } from "./context/sportsandteams/teamscontext";
+import { PreferencesProvider } from "./context/preferences/context";
 
 function App() {
   return (
     <>
       <MatchProvider>
-        <ArticleProvider>
-          <RouterProvider router={router} />
-        </ArticleProvider>
+        <SportsProvider>
+          <TeamsProvider>
+            <PreferencesProvider>
+              <ArticleProvider>
+                <RouterProvider router={router} />
+              </ArticleProvider>
+            </PreferencesProvider>
+          </TeamsProvider>
+        </SportsProvider>
       </MatchProvider>
     </>
   );

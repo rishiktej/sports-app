@@ -27,8 +27,7 @@ const Signin: React.FC = () => {
       // After successful signin we have to redirect the user to the secured page. We will do that later.
 
       const data = await response.json();
-
-      localStorage.setItem("authToken", data.token);
+      localStorage.setItem("authToken", data.auth_token);
       localStorage.setItem("userData", JSON.stringify(data.user));
 
       navigate("/account/Home");

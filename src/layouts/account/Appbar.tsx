@@ -1,7 +1,8 @@
-import { useState, useContext, Fragment } from "react";
-import { Disclosure, Menu, Transition, Switch } from "@headlessui/react";
+import React, { Fragment, useEffect, useState } from "react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Link, useLocation } from "react-router-dom";
-import React from "react";
+import PreferencesDialog from "./preferences";
+
 const userNavigation = [
   { name: "Profile", href: "#" },
   { name: "Sign out", href: "/logout" },
@@ -12,21 +13,62 @@ const classNames = (...classes: string[]): string =>
 
 const Appbar = () => {
   const { pathname } = useLocation();
+  const [authenticated, setAuthenticated] = useState(
+    !!localStorage.getItem("authToken")
+  );
+  const userDataString = localStorage.getItem("userData");
+  const userData = userDataString ? JSON.parse(userDataString) : null;
+  const storedUsername = userData && userData.name;
+
+  const [isPreferencesOpen, setIsPreferencesOpen] = useState(false);
+
+  const openPreferencesDialog = () => {
+    setIsPreferencesOpen(true);
+  };
+
+  const closePreferencesDialog = () => {
+    setIsPreferencesOpen(false);
+  };
+
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+    setAuthenticated(!!authToken);
+  }, []);
 
   const navigation = [
     { name: "signup", href: "/signup", current: false },
     { name: "signin", href: "/signin", current: false },
-  ];
+    ...(authenticated
+      ? [
+          {
+            name: "Preferences",
+            href: "#",
+            current: false,
+            onClick: openPreferencesDialog,
+          },
+        ]
+      : []),
+  ].filter(Boolean);
 
   return (
     <>
-      <Disclosure as="nav" className="border-b border-slate-200">
+      <Disclosure as="nav" className="bg-white dark:bg-gray-900 rounded-md">
         {() => (
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="#" className="flex items-center">
+              <img
+                src="https://flowbite.com/docs/images/logo.svg"
+                className="h-8 mr-3"
+                alt="sportszaga Logo"
+              />
+              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+                SportsZaga
+              </span>
+            </a>
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
                 <div className="hidden md:block">
-                  <div className="ml-10 flex items-baseline space-x-4">
+                  <div className="flex items-baseline space-x-4">
                     {navigation.map((item) => {
                       const isCurrent = pathname.includes(item.href);
 
@@ -34,6 +76,7 @@ const Appbar = () => {
                         <Link
                           key={item.name}
                           to={item.href}
+                          onClick={item.onClick}
                           className={classNames(
                             isCurrent
                               ? "bg-slate-50 text-blue-700"
@@ -46,6 +89,11 @@ const Appbar = () => {
                         </Link>
                       );
                     })}
+                    {authenticated && (
+                      <span className="text-xl text-stone-100	">
+                        Hello, {storedUsername}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -53,7 +101,9 @@ const Appbar = () => {
                 <div className="ml-4 flex items-center md:ml-6">
                   <Menu as="div" className="relative ml-3">
                     <div>
-                      <Menu.Button className="rounded-full bg-white p-1 text-gray-400 hover:text-blue-600"></Menu.Button>
+                      <Menu.Button className="rounded-full bg-white p-1 text-gray-400 hover:text-blue-600">
+                        MENU
+                      </Menu.Button>
                     </div>
                     <Transition
                       as={Fragment}
@@ -89,6 +139,13 @@ const Appbar = () => {
           </div>
         )}
       </Disclosure>
+      <PreferencesDialog
+        isOpen={isPreferencesOpen}
+        onClose={closePreferencesDialog}
+        onSavePreferences={(selectedSports, selectedTeams) => {
+          closePreferencesDialog();
+        }}
+      />
     </>
   );
 };

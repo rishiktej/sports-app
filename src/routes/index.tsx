@@ -38,7 +38,6 @@ const router = createBrowserRouter([
     path: "*",
     element: <Navigate to="/notfound" replace />,
   },
-  // Protected Routes
   {
     path: "account",
     element: <AccountLayout />,
@@ -56,6 +55,27 @@ const router = createBrowserRouter([
       },
     ],
   },
+  // {
+  //   path: "account",
+  //   element: (
+  //     <ProtectedRoute>
+  //       <AccountLayout />
+  //     </ProtectedRoute>
+  //   ),
+  //   children: [
+  //     { index: true, element: <Navigate to="/account/Home" replace /> },
+  //     {
+  //       path: "Home",
+  //       element: <MatchList />,
+  //       children: [
+  //         {
+  //           path: ":articleId",
+  //           element: <ArticleDialog />,
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
 ]);
 
 export default router;

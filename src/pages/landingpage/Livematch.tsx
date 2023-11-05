@@ -1,9 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import MatchListItems from "./livescores";
+import UserMatchlist from "./userlivescores";
 import { fetchMatch } from "../../context/livescores/action";
-import { useMatchDispatch } from "../../context/livescores/context";
+import {
+  useMatchDispatch,
+  useMatchState,
+} from "../../context/livescores/context";
 import ArticleList from "./news";
 import FilterLayout from "./filterlayout";
+import { match } from "../../context/livescores/types";
+import { API_ENDPOINT } from "../../config/constants";
 
 const MatchList: React.FC = () => {
   const matchdispatch = useMatchDispatch();
@@ -11,10 +17,62 @@ const MatchList: React.FC = () => {
   useEffect(() => {
     fetchMatch(matchdispatch);
   }, [matchdispatch]);
+  const state = useMatchState();
+  const { matches, isLoading, isError, errorMessage } = state;
+  const [selectedMatches, setselectedMatches] = useState<match[]>([]);
+  const [authenticated, setAuthenticated] = useState(
+    !!localStorage.getItem("authToken")
+  );
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+    setAuthenticated(!!authToken);
+  }, []);
+  console.log("smm", selectedMatches);
+  const fetchMatchData = async (matchId: number) => {
+    const token = localStorage.getItem("authToken") || "";
+    try {
+      const response = await fetch(`${API_ENDPOINT}/matches/${matchId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw Error("Failed to fetch Match Data");
+      }
+
+      const data = await response.json();
+      setselectedMatches((prevSelectedMatches) => [
+        ...prevSelectedMatches,
+        data,
+      ]);
+    } catch (error) {
+      console.error("Operation failed:", error);
+    }
+  };
+  let a = 0;
+  useEffect(() => {
+    const latestMatches = matches
+      .sort(
+        (a, b) => new Date(b.endsAt).getTime() - new Date(a.endsAt).getTime()
+      )
+      .slice(0, 5);
+    latestMatches.forEach((match) => {
+      fetchMatchData(match.id);
+    });
+    a += 1;
+  }, [matches]);
+  console.log(selectedMatches);
   return (
     <>
       <div>
-        <MatchListItems />
+        {authenticated ? (
+          <UserMatchlist />
+        ) : (
+          <MatchListItems selectedMatches={selectedMatches} />
+        )}
       </div>
       <div className="flex flex-col md:flex-row">
         <div className="md:w-auto p-4">
