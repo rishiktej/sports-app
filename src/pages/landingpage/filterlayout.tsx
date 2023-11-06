@@ -1,5 +1,3 @@
-// FilterLayout.js
-
 import React, { useState, useEffect } from "react";
 import {
   Card,
@@ -14,8 +12,17 @@ import {
 import { Link } from "react-router-dom";
 import { useArticleState } from "../../context/trendingnews/context";
 import { API_ENDPOINT } from "../../config/constants";
+import {
+  usePreferencesDispatch,
+  usePreferencesState,
+} from "../../context/preferences/context";
+import { fetchPreferences } from "../../context/preferences/action";
 
 export default function FilterLayout() {
+  const p_dispatch = usePreferencesDispatch();
+  useEffect(() => {
+    fetchPreferences(p_dispatch);
+  }, []);
   type Team = {
     id: number;
     name: string;
@@ -25,14 +32,26 @@ export default function FilterLayout() {
     id: number;
     name: string;
   };
+
   const [sports, setSports] = useState<Sport[]>([]);
   const [teams, setTeams] = useState<Team[]>([]);
   const state = useArticleState();
   const { articles, isLoading, isError, errorMessage } = state;
+  const preferences_data = usePreferencesState();
   const [selectedSport, setSelectedSport] = useState("all");
   const [selectedTeam, setSelectedTeam] = useState("all");
   const [filteredArticles, setFilteredArticles] = useState<article[]>([]);
+  const [authenticated, setAuthenticated] = useState(
+    !!localStorage.getItem("authToken")
+  );
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+    setAuthenticated(!!authToken);
+  }, []);
 
+  console.log(preferences_data);
+  const sportsInPreferences = preferences_data.preferences.sports || [];
+  const teamsInPreferences = preferences_data.preferences.teams || [];
   // Fetch sports and teams data using useEffect
   useEffect(() => {
     async function fetchSports() {
@@ -122,12 +141,15 @@ export default function FilterLayout() {
             value={selectedSport}
             onChange={(e) => setSelectedSport(e.target.value)}
           >
-            <option value="all">All Sports</option>
-            {sports.map((sport) => (
-              <option key={sport.id} value={sport.name}>
-                {sport.name}
-              </option>
-            ))}
+            {authenticated
+              ? sportsInPreferences.map((sport) => (
+                  <option key={sport}>{sport}</option>
+                ))
+              : sports.map((sport) => (
+                  <option key={sport.id} value={sport.name}>
+                    {sport.name}
+                  </option>
+                ))}
           </Select>
         </div>
         <div>
@@ -138,12 +160,15 @@ export default function FilterLayout() {
             value={selectedTeam}
             onChange={(e) => setSelectedTeam(e.target.value)}
           >
-            <option value="all">All Teams</option>
-            {teams.map((team) => (
-              <option key={team.id} value={team.name}>
-                {team.name}
-              </option>
-            ))}
+            {authenticated
+              ? teamsInPreferences.map((team) => (
+                  <option key={team}>{team}</option>
+                ))
+              : teams.map((team) => (
+                  <option key={team.id} value={team.name}>
+                    {team.name}
+                  </option>
+                ))}
           </Select>
         </div>
       </div>

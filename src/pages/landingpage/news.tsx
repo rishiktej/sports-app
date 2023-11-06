@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ArticleListItems from "./trendingnews";
+import UserArticlelistItems from "./usertrendingnews";
 import { useArticleDispatch } from "../../context/trendingnews/context";
 import { fetchArticles } from "../../context/trendingnews/action";
 import { Outlet } from "react-router-dom";
@@ -9,10 +10,26 @@ const ArticleList: React.FC = () => {
   useEffect(() => {
     fetchArticles(ArticleDispatch);
   }, [ArticleDispatch]);
+  const [authenticated, setAuthenticated] = useState(
+    !!localStorage.getItem("authToken")
+  );
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+    setAuthenticated(!!authToken);
+  }, []);
   return (
     <div>
-      <ArticleListItems />
-      <Outlet />
+      {authenticated ? (
+        <>
+          <UserArticlelistItems />
+          <Outlet />
+        </>
+      ) : (
+        <>
+          <ArticleListItems />
+          <Outlet />
+        </>
+      )}
     </div>
   );
 };
