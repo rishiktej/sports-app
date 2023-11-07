@@ -113,11 +113,18 @@ export default function ArticleDataListItems() {
                   alt="Article Thumbnail"
                 />
                 <CardBody>
-                  <Heading size="md">{article.title}</Heading>
+                  <Heading
+                    className="uppercase bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500"
+                    size="lg"
+                  >
+                    {article.title}
+                  </Heading>
                   <Text fontSize="sm" color="gray.500">
                     Date: {new Date(article.date).toDateString()}
                   </Text>
-                  <Text fontSize="sm">Summary: {article.summary}</Text>
+                  <Text className="text-left " fontSize="sm">
+                    Summary: {article.summary}
+                  </Text>
                 </CardBody>
                 <Link to={`${article.id}`}>
                   <Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">

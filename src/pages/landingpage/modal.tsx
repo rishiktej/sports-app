@@ -86,6 +86,21 @@ export default function ArticleDialog() {
                 >
                   Article Content
                 </Dialog.Title>
+                <div>
+                  <img
+                    src={selectedArticle?.thumbnail}
+                    alt="Article Thumbnail"
+                  />
+                </div>
+                <div>
+                  <h1 className="text-xl uppercase bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
+                    TITLE:{selectedArticle?.title}
+                  </h1>
+                </div>
+                <div className="text-lg">
+                  SPORT:{selectedArticle?.sport.name}
+                </div>
+                <div>DATE:{new Date(selectedArticle?.date).toDateString()}</div>
                 <div className="mt-2">
                   <p>{selectedArticle?.content}</p>
                 </div>
