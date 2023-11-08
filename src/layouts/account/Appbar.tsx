@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Link, useLocation } from "react-router-dom";
 import PreferencesDialog from "./preferences";
-
+import Logo from "../../assets/images/logo.png";
 const userNavigation = [
   { name: "Profile", href: "#" },
   { name: "Sign out", href: "/logout" },
@@ -56,11 +56,7 @@ const Appbar = () => {
         {() => (
           <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <a href="#" className="flex items-center">
-              <img
-                src="/root/sportsapp/sports-app/src/assets/images/logo.png"
-                className="h-8 mr-3"
-                alt="sportszaga Logo"
-              />
+              <img src={Logo} className="h-8 mr-3" alt="sportszaga Logo" />
               <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
                 SportsZaga
               </span>
