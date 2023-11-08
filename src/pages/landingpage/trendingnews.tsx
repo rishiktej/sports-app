@@ -98,7 +98,10 @@ export default function ArticleDataListItems() {
           </button>
         </li>
       </ul>
-      <div className="space-y-4">
+      <div
+        className="space-y-4"
+        style={{ height: "400px", overflowY: "scroll" }}
+      >
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={4}>
           {filteredArticles.map((article) => (
             <div key={article.id} className="bg-white p-1 rounded shadow-sm">

@@ -13,6 +13,7 @@ import {
   useTeamsState,
 } from "../../context/sportsandteams/teamscontext";
 import { API_ENDPOINT } from "../../config/constants";
+import { Navigate, useNavigate } from "react-router-dom";
 
 interface PreferencesDialogProps {
   isOpen: boolean;
@@ -38,6 +39,7 @@ const PreferencesDialog: React.FC<PreferencesDialogProps> = ({
   }, []);
   const sports_state = useSportsState();
   const teams_state = useTeamsState();
+  const navigate = useNavigate();
   const { sports, isLoading, isError, errorMessage } = sports_state;
   const { teams } = teams_state;
   const [selectedSports, setSelectedSports] = useState<string[]>([]);
@@ -119,8 +121,8 @@ const PreferencesDialog: React.FC<PreferencesDialogProps> = ({
     onSavePreferences(selectedSports, selectedTeams);
     updatePreferences(selectedSports, selectedTeams).then((result) => {
       if (result.ok) {
-        // Preferences saved successfully, reload the page
-        window.location.reload();
+        getPreferences();
+        navigate("../../");
       } else {
         // Handle errors or display a message to the user
         console.error("Failed to save preferences:", result.error);

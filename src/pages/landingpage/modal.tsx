@@ -90,6 +90,7 @@ export default function ArticleDialog() {
                   <img
                     src={selectedArticle?.thumbnail}
                     alt="Article Thumbnail"
+                    style={{ width: "500px", height: "350px" }}
                   />
                 </div>
                 <div>

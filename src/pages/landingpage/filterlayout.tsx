@@ -141,9 +141,12 @@ export default function FilterLayout() {
             value={selectedSport}
             onChange={(e) => setSelectedSport(e.target.value)}
           >
+            <option value="all">All</option>
             {authenticated
               ? sportsInPreferences.map((sport) => (
-                  <option key={sport}>{sport}</option>
+                  <option key={sport} value={sport}>
+                    {sport}
+                  </option>
                 ))
               : sports.map((sport) => (
                   <option key={sport.id} value={sport.name}>
@@ -160,9 +163,12 @@ export default function FilterLayout() {
             value={selectedTeam}
             onChange={(e) => setSelectedTeam(e.target.value)}
           >
+            <option value="all">All</option>
             {authenticated
               ? teamsInPreferences.map((team) => (
-                  <option key={team}>{team}</option>
+                  <option key={team} value={team}>
+                    {team}
+                  </option>
                 ))
               : teams.map((team) => (
                   <option key={team.id} value={team.name}>
@@ -172,53 +178,55 @@ export default function FilterLayout() {
           </Select>
         </div>
       </div>
-
-      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={4}>
-        {filteredArticles.map((article) => (
-          <div key={article.id} className="bg-white p-1 rounded shadow-sm">
-            <Card
-              w="300px"
-              p="2"
-              m="2"
-              boxShadow="md"
-              rounded="lg"
-              border="1px solid #e2e8f0"
-            >
-              <Image
-                objectFit="cover"
-                maxH="150px"
-                src={article.thumbnail}
-                alt="Article Thumbnail"
-              />
-              <CardBody>
-                <Heading
-                  size="sm"
-                  className="uppercase bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500"
+      {filteredArticles.length === 0 ? (
+        <div>No articles found.</div>
+      ) : (
+        <div style={{ height: "500px", overflowY: "scroll" }}>
+          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={4}>
+            {filteredArticles.map((article) => (
+              <div key={article.id} className="bg-white p-1 rounded shadow-sm">
+                <Card
+                  w="300px"
+                  p="2"
+                  m="2"
+                  boxShadow="md"
+                  rounded="lg"
+                  border="1px solid #e2e8f0"
                 >
-                  {" "}
-                  {article.title}
-                </Heading>
-                <Text fontSize="xs" color="gray.500">
-                  {" "}
-                  Date: {new Date(article.date).toDateString()}
-                </Text>
-                <Text fontSize="xs" className="text-left ">
-                  {" "}
-                  Summary: {article.summary}.
-                </Text>
-                <Link to={`${article.id}`}>
-                  <Button
-                    size="sm"
-                    className="bg-cyan-500 hover:bg-cyan-600 rounded border px-2"
-                  >
-                    Read More
-                  </Button>
-                </Link>
-              </CardBody>
-            </Card>
-          </div>
-        ))}
-      </SimpleGrid>
+                  <Image
+                    objectFit="cover"
+                    maxH="150px"
+                    src={article.thumbnail}
+                    alt="Article Thumbnail"
+                  />
+                  <CardBody>
+                    <Heading
+                      size="sm"
+                      className="uppercase bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500"
+                    >
+                      {article.title}
+                    </Heading>
+                    <Text fontSize="xs" color="gray.500">
+                      Date: {new Date(article.date).toDateString()}
+                    </Text>
+                    <Text fontSize="xs" className="text-left">
+                      Summary: {article.summary}.
+                    </Text>
+                    <Link to={`${article.id}`}>
+                      <Button
+                        size="sm"
+                        className="bg-cyan-500 hover:bg-cyan-600 rounded border px-2"
+                      >
+                        Read More
+                      </Button>
+                    </Link>
+                  </CardBody>
+                </Card>
+              </div>
+            ))}
+          </SimpleGrid>
+        </div>
+      )}
     </div>
   );
 }

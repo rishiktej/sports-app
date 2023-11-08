@@ -72,7 +72,10 @@ export default function userArticleDataListItems() {
           </li>
         ))}
       </ul>
-      <div className="space-y-4">
+      <div
+        className="space-y-4"
+        style={{ height: "600px", overflowY: "scroll" }}
+      >
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={4}>
           {filteredArticles.length == 0 ? (
             <span>No articles found for the selected sport.</span>
