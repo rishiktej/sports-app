@@ -21,7 +21,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.47.0",
     "react-router-dom": "^6.17.0",
-    "vite-plugin-pwa": "^0.16.5"
+    "vite-plugin-pwa": "^0.16.7"
   },
   "devDependencies": {
     "@headlessui/react": "^1.7.17",
