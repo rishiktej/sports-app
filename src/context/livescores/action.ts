@@ -40,3 +40,25 @@ export const fetchMatch = async (
     });
   }
 };
+
+export const fetchMatchData = async (matchId: number) => {
+    const token = localStorage.getItem("authToken") || "";
+    try {
+      const response = await fetch(`${API_ENDPOINT}/matches/${matchId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw Error("Failed to fetch Match Data");
+      }
+
+      const data = await response.json();
+     return data
+    } catch (error) {
+      console.error("Operation failed:", error);
+    }
+  };

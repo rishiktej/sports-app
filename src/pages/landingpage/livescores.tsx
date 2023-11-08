@@ -3,9 +3,13 @@ import { match } from "../../context/livescores/types";
 
 interface LatestMatchesProps {
   selectedMatches: match[];
+  onRefreshMatch: (matchId: string) => void;
 }
 
-export default function LatestMatches({ selectedMatches }: LatestMatchesProps) {
+export default function LatestMatches({
+  selectedMatches,
+  onRefreshMatch,
+}: LatestMatchesProps) {
   const uniqueMatches = selectedMatches.filter(
     (match, index, self) => index === self.findIndex((m) => m.id === match.id)
   );
@@ -37,7 +41,7 @@ export default function LatestMatches({ selectedMatches }: LatestMatchesProps) {
                       <p className="text-gray-600 text-sm dark:text-gray-400">
                         Sport: {match.sportName}
                       </p>
-                      <h5 className="mb-2 text-sm font-medium tracking-tight text-gray-900 ">
+                      <h5 className="mb-2 text-sm font-medium tracking-tight text-gray-900">
                         {match.name}
                       </h5>
                       <div>
@@ -61,10 +65,7 @@ export default function LatestMatches({ selectedMatches }: LatestMatchesProps) {
                       <p className="text-sm text-gray-600">
                         Ends at: {new Date(match.endsAt).toLocaleString()}
                       </p>
-                      <button
-                      // onClick={() => handleRefreshMatch()}
-                      // disabled={isRefreshing[index]}
-                      >
+                      <button onClick={() => onRefreshMatch(String(match.id))}>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
@@ -85,7 +86,7 @@ export default function LatestMatches({ selectedMatches }: LatestMatchesProps) {
             )}
             {upcomingMatches.length > 0 && (
               <div>
-                <h3>other Matches</h3>
+                <h3>Other Matches</h3>
                 <div className="flex space-x-4">
                   {upcomingMatches.map((match) => (
                     <div
@@ -95,7 +96,7 @@ export default function LatestMatches({ selectedMatches }: LatestMatchesProps) {
                       <p className="text-gray-600 text-sm dark:text-gray-400">
                         Sport: {match.sportName}
                       </p>
-                      <h5 className="mb-2 text-sm font-medium tracking-tight text-gray-900 ">
+                      <h5 className="mb-2 text-sm font-medium tracking-tight text-gray-900">
                         {match.name}
                       </h5>
                       <div>

@@ -69,7 +69,12 @@ const MatchList: React.FC = () => {
         {authenticated ? (
           <UserMatchlist />
         ) : (
-          <MatchListItems selectedMatches={selectedMatches} />
+          <MatchListItems
+            selectedMatches={selectedMatches}
+            onRefreshMatch={(matchId) => {
+              fetchMatchData(parseInt(matchId));
+            }}
+          />
         )}
       </div>
       <div className="flex flex-col md:flex-row">

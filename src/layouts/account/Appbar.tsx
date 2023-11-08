@@ -86,7 +86,7 @@ const Appbar = () => {
                       );
                     })}
                     {authenticated && (
-                      <span className="text-xl text-stone-100	">
+                      <span className="text-xl text-stone-100	dark:text-white">
                         Hello, {storedUsername}
                       </span>
                     )}
