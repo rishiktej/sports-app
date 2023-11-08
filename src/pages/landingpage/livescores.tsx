@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
 import { useMatchState } from "../../context/livescores/context";
 import { match } from "../../context/livescores/types";
-import { API_ENDPOINT } from "../../config/constants";
 
 interface LatestMatchesProps {
   selectedMatches: match[];

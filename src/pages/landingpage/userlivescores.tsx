@@ -7,7 +7,7 @@ import {
   usePreferencesState,
 } from "../../context/preferences/context";
 import { fetchPreferences } from "../../context/preferences/action";
-import { RefreshIcon } from "@heroicons/react/solid";
+import { useNavigate } from "react-router-dom";
 
 export default function LiveAndPastMatches() {
   const p_dispatch = usePreferencesDispatch();

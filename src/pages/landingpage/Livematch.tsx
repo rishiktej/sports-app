@@ -52,7 +52,6 @@ const MatchList: React.FC = () => {
       console.error("Operation failed:", error);
     }
   };
-  let a = 0;
   useEffect(() => {
     const latestMatches = matches
       .sort(
@@ -62,7 +61,6 @@ const MatchList: React.FC = () => {
     latestMatches.forEach((match) => {
       fetchMatchData(match.id);
     });
-    a += 1;
   }, [matches]);
   console.log(selectedMatches);
   return (
