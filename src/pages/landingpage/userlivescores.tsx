@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMatchState } from "../../context/livescores/context";
 import { API_ENDPOINT } from "../../config/constants";
 import { match } from "../../context/livescores/types";
@@ -7,7 +7,6 @@ import {
   usePreferencesState,
 } from "../../context/preferences/context";
 import { fetchPreferences } from "../../context/preferences/action";
-import { useNavigate } from "react-router-dom";
 
 export default function LiveAndPastMatches() {
   const p_dispatch = usePreferencesDispatch();
