@@ -10,8 +10,11 @@ import ArticleList from "./news";
 import FilterLayout from "./filterlayout";
 import { match } from "../../context/livescores/types";
 import { API_ENDPOINT } from "../../config/constants";
+import { useTranslation } from "react-i18next";
+import i18n from "../../i18n";
 
 const MatchList: React.FC = () => {
+  const { t, i18n: i18nInstance } = useTranslation();
   const matchdispatch = useMatchDispatch();
   console.log("md", matchdispatch);
   useEffect(() => {
@@ -63,8 +66,57 @@ const MatchList: React.FC = () => {
     });
   }, [matches]);
   console.log(selectedMatches);
+
+  const storedLanguage = localStorage.getItem("selectedLanguage");
+  const initialLanguage = storedLanguage || "en";
+
+  const [selectedLanguage, setSelectedLanguage] = useState(initialLanguage);
+
+  const languageOptions = [
+    { value: "en", label: "English" },
+    { value: "zh", label: "中文" },
+    { value: "fr", label: "Français" },
+    { value: "de", label: "Deutsch" },
+    { value: "ja", label: "日本語" },
+  ];
+  const date = new Date();
+  const currencyValue = 12345.67;
+
+  const langString = selectedLanguage + "-" + selectedLanguage.toUpperCase();
+  console.log("ls=", langString);
+
+  const dateFormatter = new Intl.DateTimeFormat(langString, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  const timeFormatter = new Intl.DateTimeFormat(langString, {
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+  });
+
+  const currencyFormatter = new Intl.NumberFormat(langString, {
+    style: "currency",
+    currency: "INR",
+  });
+
+  const formattedDate = dateFormatter.format(date);
+  const formattedTime = timeFormatter.format(date);
+  const formattedCurrency = currencyFormatter.format(currencyValue);
+  useEffect(() => {
+    localStorage.setItem("selectedLanguage", selectedLanguage);
+    i18nInstance.changeLanguage(selectedLanguage);
+  }, [selectedLanguage, i18nInstance]);
+
   return (
     <>
+      <h3 className="text-l font-bold font-custom">
+        {" "}
+        Date : {formattedDate} <br /> Time : {formattedTime} <br /> Currency :{" "}
+        {formattedCurrency}{" "}
+      </h3>
       <div>
         {authenticated ? (
           <UserMatchlist />
@@ -77,16 +129,29 @@ const MatchList: React.FC = () => {
           />
         )}
       </div>
+      <div className="flex items-center mb-4">
+        <h2 className="mr-2">{t("Select Language:")}</h2>
+        <select
+          value={selectedLanguage}
+          onChange={(e) => setSelectedLanguage(e.target.value)}
+        >
+          {languageOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </div>
       <div className="flex flex-col md:flex-row">
         <div className="md:w-auto p-4">
           <h2 className="text-2xl font-medium tracking-tight text-slate-700 mb-4">
-            Latest Articles
+            {t("Latest Articles")}
           </h2>
           <ArticleList />
         </div>
         <div className="md:w-auto p-4">
           <h2 className="text-2xl font-medium tracking-tight text-slate-700 mb-4">
-            Filter by Sport and Team
+            {t("Filter by Sport and Team")}
           </h2>
           <FilterLayout />
         </div>

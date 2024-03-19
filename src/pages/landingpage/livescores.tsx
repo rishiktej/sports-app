@@ -5,7 +5,6 @@ interface LatestMatchesProps {
   selectedMatches: match[];
   onRefreshMatch: (matchId: string) => void;
 }
-
 export default function LatestMatches({
   selectedMatches,
   onRefreshMatch,
@@ -26,7 +25,7 @@ export default function LatestMatches({
       {/* Render latest matches for non-authenticated users */}
       {uniqueMatches.length > 0 && (
         <div>
-          <h2>Latest Matches</h2>
+          <h2>"Latest Matches"</h2>
           <div className="overflow-x-auto">
             {liveMatches.length > 0 && (
               <div>

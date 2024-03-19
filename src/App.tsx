@@ -8,6 +8,7 @@ import { ArticleProvider } from "./context/trendingnews/context";
 import { SportsProvider } from "./context/sportsandteams/sportscontext";
 import { TeamsProvider } from "./context/sportsandteams/teamscontext";
 import { PreferencesProvider } from "./context/preferences/context";
+import "./i18n.ts";
 
 function App() {
   return (

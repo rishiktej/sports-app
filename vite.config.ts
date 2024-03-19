@@ -1,12 +1,12 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from "vite-plugin-pwa";
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 // https://vitejs.dev/config/
-export default ({ mode }) => {
-  return defineConfig({
-    build: {
-      outDir: "dev-dist",
-    },
+export default defineConfig({
+  build: {
+    sourcemap: true, // Source map generation must be turned on
+  },
    plugins: [
     react(),
     VitePWA({
@@ -47,9 +47,11 @@ export default ({ mode }) => {
         theme_color: '#AAF',
       },
     }),
+     sentryVitePlugin({
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      org: "nill-e2",
+      project: "javascript-react",
+    }),
   ],
-    define: {
-      "process.env.NODE_ENV": `"${mode}"`,
-    },
+  
   });
-};
