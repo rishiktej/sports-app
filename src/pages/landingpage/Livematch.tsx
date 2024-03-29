@@ -117,6 +117,15 @@ const MatchList: React.FC = () => {
         Date : {formattedDate} <br /> Time : {formattedTime} <br /> Currency :{" "}
         {formattedCurrency}{" "}
       </h3>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        type="button"
+        onClick={() => {
+          throw new Error("Sentry Test Error");
+        }}
+      >
+        Break the world
+      </button>
       <div>
         {authenticated ? (
           <UserMatchlist />

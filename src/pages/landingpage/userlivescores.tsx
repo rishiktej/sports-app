@@ -181,6 +181,7 @@ export default function LiveAndPastMatches() {
       {uniquepastMatches.length > 0 && authenticated && (
         <div>
           <h2>Past Matches</h2>
+
           <div className="flex space-x-4 overflow-x-auto">
             {uniquepastMatches.map((match) => (
               <div
